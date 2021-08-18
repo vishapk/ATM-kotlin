@@ -1,6 +1,6 @@
 package com.example
 
 interface Printer {
-    fun printStatement(transactionAmount: Int) {
+    fun printStatement(transactionStatement: String) {
     }
 }

@@ -1,9 +1,11 @@
 package com.example
 
-class FakeBankingService: BankingService {
+class FakeBankingService(val shouldSucceed: Boolean): BankingService {
 
-    override fun withdraw(shouldSucceed: Boolean): Int {
-        if(shouldSucceed)    return 100
-        else    throw error("Invalid Amount")
+    var amountWithdrawn=0
+
+    override fun withdraw(amountToWithdraw: Int){
+        if(amountToWithdraw<0 || !shouldSucceed)    throw error("Invalid Amount")
+        else        amountWithdrawn+=amountToWithdraw
     }
 }

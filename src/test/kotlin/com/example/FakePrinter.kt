@@ -1,11 +1,12 @@
 package com.example
 
-class FakePrinter(var countTransaction: Int=0): Printer {
+class FakePrinter: Printer {
 
-    override fun printStatement(transactionAmout: Int){
+    var countTransaction: Int=0
+    var transactionStatement: String=""
+
+    override fun printStatement(transactionStatement: String){
         countTransaction++
-        val transactionStatement="$transactionAmout withdrawn successfully"
-        println(transactionStatement)
-
+        this.transactionStatement=transactionStatement
     }
 }

@@ -7,11 +7,31 @@ class AutoTellerMachineTest: StringSpec({
 
     "should print a receipt if money is withdrawn successfully" {
 
-        val ATM= AutoTellerMachine(FakeBankingService(), FakePrinter())
+        val printer=    FakePrinter()
+        val bankingService= FakeBankingService(true)
+
+        val ATM= AutoTellerMachine(bankingService, printer)
         ATM.withdraw(200)
-        ATM.printer.printStatement(200) shouldBe println("200 withdrawn successfully")
+        printer.transactionStatement shouldBe ("200 withdrawn successfully.")
     }
 
-    "should throw exception if banking service throws an exception" {
+    "should print an error if banking service throws an Exception" {
+
+        val printer=    FakePrinter()
+        val bankingService= FakeBankingService(false)
+
+        val ATM= AutoTellerMachine(bankingService, printer)
+        ATM.withdraw(200)
+        printer.transactionStatement shouldBe ("Error occurred during transaction.")
+    }
+
+    "should print an error if amount entered is invalid" {
+
+        val printer=    FakePrinter()
+        val bankingService= FakeBankingService(true)
+
+        val ATM= AutoTellerMachine(bankingService, printer)
+        ATM.withdraw(-200)
+        printer.transactionStatement shouldBe ("Error occurred during transaction.")
     }
 })
